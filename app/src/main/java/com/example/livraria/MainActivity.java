@@ -1,0 +1,72 @@
+package com.example.livraria;
+
+
+        import android.content.Intent;
+        import android.support.v7.app.AppCompatActivity;
+        import android.os.Bundle;
+        import android.view.View;
+        import android.widget.EditText;
+        import android.widget.Toast;// essa classe vai nos permitir exibir mensagens na tela do celular, vai ser utilizada para confirmar ou dar avisos ao usuário
+
+public class MainActivity extends AppCompatActivity {
+    BancoDados banco = new BancoDados(this);
+    EditText  titulo1, editora1, ano1, autor1;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        titulo1 = (EditText) findViewById(R.id.campoTitulo);
+        editora1 = (EditText) findViewById(R.id.campoEditora);
+        ano1 = (EditText) findViewById(R.id.campoAno);
+        autor1 = (EditText) findViewById(R.id.campoAutor);
+        BancoDados banco = new BancoDados(this);
+    }
+
+    public void inserir(View v) {
+
+        if (this.titulo1.length() != 0 && this.editora1.length() != 0 && this.ano1.length() != 0 && this.autor1.length() != 0) { // o id não pode ser vazio, ele é chave primária, esse if vai nos garantir isso
+            //Integer id = Integer.parseInt(this.id1.getText().toString());
+            String titulo = this.titulo1.getText().toString();
+            String editora = this.editora1.getText().toString();
+            String ano = this.ano1.getText().toString();
+            String autor = this.autor1.getText().toString();
+            BancoDados banco = new BancoDados(this);
+            banco.insereLivro(new Livros(titulo, editora, ano, autor));
+            titulo1.setText("");
+            editora1.setText("");
+            ano1.setText("");
+            autor1.setText("");
+            Toast.makeText(this, "Dados inseridos com sucesso", Toast.LENGTH_LONG).show();
+
+        } else {
+            Toast.makeText(this, "Nenhum campo pode ficar vazio", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void limpar(View v) {//todos os campos vão ser limpos, só vai ser setado ""
+        titulo1.setText("");
+        editora1.setText("");
+        ano1.setText("");
+        autor1.setText("");
+        Toast.makeText(this, "Campos de texto foram limpos", Toast.LENGTH_LONG).show();
+    }
+
+    public void consultar(View v) {
+        Intent nova = new Intent(this, com.example.livraria.Consultar.class);// declaração da nova classe que vai ser chamada
+
+        startActivity(nova);//iniciação da classe nova que foi declarada antes
+
+    }
+
+    public void listar(View v) {
+        Intent nova2 = new Intent(this, com.example.livraria.Listar.class);
+
+        startActivity(nova2);
+    }
+
+}
+
+
+
+
+
